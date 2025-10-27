@@ -4,6 +4,7 @@
   "main": "server.js",
   "author": "shafayat",
   "license": "MIT",
+  
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only ./src/server.ts"
   },
