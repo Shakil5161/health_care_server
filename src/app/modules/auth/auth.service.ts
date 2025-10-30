@@ -18,7 +18,7 @@ const login = async (payload: {email: string, password: string}) => {
         throw new Error("Password is incorrect!")
     }
     
-    const accessToken = jwtHelper.generateToken({email: user.email, role: user.role}, config.jwt_secret as string,"1h")
+    const accessToken = jwtHelper.generateToken({email: user.email, role: user.role}, config.jwt_secret as string,"10h")
 
     const refreshToken = jwtHelper.generateToken({email: user.email, role: user.role}, config.jwt_secret as string, "30d")
 

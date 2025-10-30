@@ -28,3 +28,13 @@ Uploading Image to Cloudinary
 Implementing User Login
 Generating JWT Token
 Storing Token in Cookies
+
+Part-3
+1 Fetch All Users with Pagination
+2 Fetch All Users with Searching and Sorting
+3 Fetch All Users with Filtering
+4 Implement Pick Function for Query Parameters
+5 Create Pagination Helper Function
+6 Apply Prisma Where Conditions for User Data Retrieval
+7 Overview of Metadata, Searching, Sorting, Filtering & Pagination
+8 Implement Authentication Middleware
