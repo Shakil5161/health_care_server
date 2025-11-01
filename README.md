@@ -38,3 +38,14 @@ Part-3
 6 Apply Prisma Where Conditions for User Data Retrieval
 7 Overview of Metadata, Searching, Sorting, Filtering & Pagination
 8 Implement Authentication Middleware
+
+
+Part-4
+
+1 Planning Schedule and Doctor Schedule Creation
+2 Writing Prisma Schema for Schedule and Doctor Schedule
+3 Creating Schedule
+4 Retrieving Schedules for a Specific Doctor
+5 Deleting Schedule from the Database
+6 Creating Doctor Schedule – Part 2 & Handling User Type (JWT Payload)
+7 Fixing & Enhancing “Get Available Schedule for Doctor” Functionality
