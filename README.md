@@ -49,3 +49,16 @@ Part-4
 5 Deleting Schedule from the Database
 6 Creating Doctor Schedule – Part 2 & Handling User Type (JWT Payload)
 7 Fixing & Enhancing “Get Available Schedule for Doctor” Functionality
+
+
+Part-5
+
+1 Prisma Error Handling 
+2 Implementing ApiError Handling
+3 Applying Zod Validations
+4 Overview & Implementation of Specialty and Doctor Specialty
+5 Implementing Doctor Searching Functionality
+6 Fixing Errors in Doctor Searching
+7 Implementing Doctor Profile Update
+8 Creating & Deleting Doctor Specialties
+9 Filtering Doctors by Specialty and Task
