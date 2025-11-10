@@ -14,5 +14,10 @@ export default {
         api_key: process.env.API_KEY,
         api_secret: process.env.API_SECRET,
     },
-    openrouter_api_key: process.env.OPENROUTER_API_KEY
+    openrouter_api_key: process.env.OPENROUTER_API_KEY,
+    stripe: {
+        secret_key: process.env.STRIPE_SECRET_KEY,
+        webhook_secret: process.env.STRIPE_WEBHOOK_SECRET
+    },
+    client_url: process.env.CLIENT_URL
 }

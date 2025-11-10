@@ -2,12 +2,14 @@ import { Server } from 'http';
 import app from './app';
 import config from './config';
 
+console.log("Server.ts")
 
 async function bootstrap() {
     // This variable will hold our server instance
     let server: Server;
 
     try {
+        console.log
         // Start the server
         server = app.listen(config.port, () => {
             console.log(`🚀 Server is running on http://localhost:${config.port}`);

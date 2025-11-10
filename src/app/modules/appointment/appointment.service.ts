@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { prisma } from "../../shared/prisma";
 import { IJWTPayload } from "../../type/common";
+import { PaymentService } from '../payment/payment.service';
 
 const createAppointment = async (user: IJWTPayload, payload: {doctorId: string, scheduleId: string}) => {
 
@@ -62,7 +63,19 @@ const createAppointment = async (user: IJWTPayload, payload: {doctorId: string, 
         return appointmentData
 
     })
-    return result
+
+    const paymentSession = await PaymentService.createPaymentSession({
+        appointmentId: result.id,
+        amount: doctorData.appointmentFee,
+        doctorId: doctorData.id
+    });
+
+    return {
+        appointmentData: result,
+        paymentUrl: paymentSession.url
+    };
+
+    // return result
 }
 
 
