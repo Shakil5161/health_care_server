@@ -1,39 +1,34 @@
-import { Request, Response } from 'express';
-import Stripe from 'stripe';
-import config from '../../../config';
-import ApiError from '../../errors/ApiError';
-import catchAsync from '../../shared/catchAsync';
-import { PaymentService } from './payment.service';
+import { Request, Response } from "express";
+import config from "../../../config";
+import { stripe } from "../../helper/stripe";
+import catchAsync from "../../shared/catchAsync";
+import sendResponse from "../../shared/sendResponse";
+import { PaymentService } from "./payment.service";
 
-const initPayment = catchAsync(async (req: Request, res: Response) => {
-  const session = await PaymentService.createPaymentSession(req.body);
-  res.json({
-    url: session.url
-  });
-});
+const handleStripeWebhookEvent = catchAsync(async (req: Request, res: Response) => {
 
-const webhook = catchAsync(async (req: Request, res: Response) => {
-  const sig = req.headers['stripe-signature'] as string;
-  const stripe = new Stripe(config.stripe.secret_key as string);
+    const sig = req.headers["stripe-signature"] as string;
+    const webhookSecret = config.stripe.webhook_secret as string;
 
-  let event: Stripe.Event;
+    console.log(webhookSecret, 'webhook')
 
-  try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      config.stripe.webhook_secret as string
-    );
-  } catch (err: any) {
-    throw new ApiError(400, `Webhook Error: ${err?.message}`);
-    return;
-  }
+    let event;
+    try {
+        event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err: any) {
+        console.error("⚠️ Webhook signature verification failed:", err.message);
+        return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+    const result = await PaymentService.handleStripeWebhookEvent(event);
 
-  await PaymentService.webhook(event);
-  res.send();
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: 'Webhook req send successfully',
+        data: result,
+    });
 });
 
 export const PaymentController = {
-  initPayment,
-  webhook
-};
+    handleStripeWebhookEvent
+}

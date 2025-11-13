@@ -10,6 +10,7 @@ npm install prisma --save-dev
 npm install @prisma/client
 
 npx prisma init (To create prisma folder to your project)
+npx prisma studio
 
 Part-1
 
@@ -73,3 +74,12 @@ Part-6
 5. Creating Appointment 
 6. Booking Appointment Functionality
 7. Creating Payment for Appointment
+
+Part-7
+
+1. Stripe Payment Implementation 
+2. Implementing Stripe Webhook to Verify Payment
+3. Handling Webhook & Updating Payment Status
+4. Fetching Appointments for Doctor or Patient
+5. Updating Appointment Status 
+6. Creating Prescription for a Completed Appointment

@@ -1,79 +1,42 @@
-import Stripe from 'stripe';
-import config from '../../../config';
-import ApiError from '../../errors/ApiError';
-import { prisma } from '../../shared/prisma';
+import { PaymentStatus } from "@prisma/client";
+import Stripe from "stripe";
+import { prisma } from "../../shared/prisma";
 
-const stripe = new Stripe(config.stripe.secret_key as string);
+const handleStripeWebhookEvent = async (event: Stripe.Event) => {
+    switch (event.type) {
+        case "checkout.session.completed": {
+            const session = event.data.object as any;
 
-const createPaymentSession = async (data: any) => {
-  const payment = await prisma.payment.findFirstOrThrow({
-    where: {
-      appointmentId: data.appointmentId
-    }
-  });
-  
-  if(!payment){
-    throw new ApiError(400, "Payment Not Found")
-  }
+            const appointmentId = session.metadata?.appointmentId;
+            const paymentId = session.metadata?.paymentId;
 
-  const session = await stripe.checkout.sessions.create({
-    payment_method_types: ['card'],
-    mode: 'payment',
-    line_items: [
-      {
-        price_data: {
-          currency: 'usd',
-          product_data: {
-            name: 'Doctor Appointment',
-          },
-          unit_amount: data.amount * 100, // convert to cents
-        },
-        quantity: 1,
-      },
-    ],
-    metadata: {
-      appointmentId: data.appointmentId,
-      doctorId: data.doctorId
-    },
-    success_url: `${config.client_url}/payment/success?sessionId={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${config.client_url}/payment/cancel`,
-  });
+            await prisma.appointment.update({
+                where: {
+                    id: appointmentId
+                },
+                data: {
+                    paymentStatus: session.payment_status === "paid" ? PaymentStatus.PAID : PaymentStatus.UNPAID
+                }
+            })
 
-  // Update payment record with session ID
-  await prisma.payment.update({
-    where: {
-      appointmentId: payment.appointmentId 
-    },
-    data: {
-      transactionId: session.id
-    }
-  });
+            await prisma.payment.update({
+                where: {
+                    appointmentId: appointmentId
+                },
+                data: {
+                    status: session.payment_status === "paid" ? PaymentStatus.PAID : PaymentStatus.UNPAID,
+                    paymentGatewayData: session
+                }
+            })
 
-  return session;
-};
-
-const webhook = async (event: Stripe.Event) => {
-  switch (event.type) {
-    case 'checkout.session.completed': {
-      const session = event.data.object as Stripe.Checkout.Session;
-      
-      // Update payment status
-      await prisma.payment.update({
-        where: {
-          transactionId: session.id
-        },
-        data: {
-          status: 'PAID',
-          paymentGatewayData: new Date()
+            break;
         }
-      });
 
-      break;
+        default:
+            console.log(`ℹ️ Unhandled event type: ${event.type}`);
     }
-  }
 };
 
 export const PaymentService = {
-  createPaymentSession,
-  webhook
-};
+    handleStripeWebhookEvent
+}
