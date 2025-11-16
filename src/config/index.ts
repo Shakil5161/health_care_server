@@ -19,5 +19,8 @@ export default {
         secret_key: process.env.STRIPE_SECRET_KEY,
         webhook_secret: process.env.STRIPE_WEBHOOK_SECRET
     },
-    client_url: process.env.CLIENT_URL
+    client_url: process.env.CLIENT_URL,
+    reset_pass_link: process.env.FORNTEND_LINK,
+    node_mailer_email: process.env.NODEMAILER_EMAIL,
+    node_mailer_pass: process.env.NODEMAILER_PASS,
 }
