@@ -83,3 +83,22 @@ Part-7
 4. Fetching Appointments for Doctor or Patient
 5. Updating Appointment Status 
 6. Creating Prescription for a Completed Appointment
+
+
+Part-8
+
+1. Designing Review, Patient Health Data, and Medical Report Schemas & Creating Review
+2. Creating or Updating Patient Health Data 
+3. Overview of Change Password, Refresh Token, Forgot & Reset Password Features
+4. Retrieving Information from Cookies
+5. Fetching Prescriptions as a Patient
+6. Updating Profile Status  
+
+Part-9
+
+1. Designing Strategy to Cancel Unpaid Appointments
+2. Implementing Task Scheduling with Node Cron
+3. Fetching Dashboard Metadata 
+4. Retrieving Information from Cookies
+5. Fetching Prescriptions as a Patient
+6. Updating Profile Status  
