@@ -4,6 +4,7 @@ import pick from "../../helper/pick";
 import catchAsync from "../../shared/catchAsync";
 import sendResponse from "../../shared/sendResponse";
 import { IJWTPayload } from "../../type/common";
+import { appointmentFilterableFields } from "./appointment.constant";
 import { AppointmentService } from "./appointment.service";
 
 const createAppointment = catchAsync(async (req: Request & {user?: IJWTPayload}, res: Response) => {
