@@ -10,7 +10,7 @@ const handleStripeWebhookEvent = catchAsync(async (req: Request, res: Response) 
     const sig = req.headers["stripe-signature"] as string;
     const webhookSecret = config.stripe.webhook_secret as string;
 
-    console.log(webhookSecret, 'webhook')
+    // console.log(webhookSecret, 'webhook')
 
     let event;
     try {
