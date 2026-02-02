@@ -3,7 +3,8 @@ git clone https://github.com/Apollo-Level2-Web-Dev/Health-Care-Server2.0_starter
 
 Run the command below
 
-npm i
+npm i 
+
 npm run dev
 
 npm install prisma --save-dev
